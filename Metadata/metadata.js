@@ -58,80 +58,109 @@ let candleData = dataFromKite.data;
 
 // }
 
-function start() {
+async function start() {
   for (let i = 0; i < candleData.candles.length; i++) {
     let candle = candleData.candles[i];
     let date = new Date(candle[0]);
+    let meataData = await getMetaData(date.getMonth());
+    // console.log(meataData);
+    mainLogicFun(meataData, candle);
     // console.log(date.getMonth());
-    console.log(getMetaData(date.getMonth()));
   }
 }
 start();
 
+function mainLogicFun(meta, candle) {
+  console.log("Meta:", meta);
+  console.log("Candle:", candle);
+
+}
+
 function getMetaData(month) {
   if (finalDatas.length == 0) {
-    return genrateMetaData(month);
+    let temp = genrateMetaData(month);
+    finalDatas.push(temp);
+    return temp;
+  } else {
+    for (let i = 0; i < finalDatas.length; i++) {
+      let temp = finalDatas[i];
+      temp.noOfTrades++;
+      if (temp.monthNumber == month) return temp;
+      else {
+        return new Error("Please check this line if you this Error");
+      }
+    }
   }
 }
 
 function genrateMetaData(month) {
-  var outputData = {
+  return {
     instrumentName: "infy",
     instrumentId: 4545,
     instrumentMargin: 0,
     customProfitPercentage: 0,
-    payload: [
+    monthNumber: month,
+    monthName: getMonthName(month),
+    noOfDays: 0,
+    noOfTrades: 0,
+    noOfWinningTrades: 0,
+    noOfLosingTrades: 0,
+    pointsEarned: 0,
+    quantity: 0,
+    netProfitAndLoss: this.pointsEarned * this.quantity,
+    maxProfitPoints: 0,
+    maxLossPoints: 0,
+    maxProfitOneTrade: this.quantity * this.maxProfitPoints,
+    maxLossPoints: this.quantity * this.maxLossPoints,
+    targetHit: 0,
+    stoplossHit: 0,
+    partialProfit: this.noOfWinningTrades - this.targetHit,
+    partialLoss: this.noOfLosingTrades - this.stoplossHit,
+    averagePoints: this.pointsEarned / this.noOfTrades,
+    data: [
       {
-        monthName: getMonthName(month),
-        noOfDays: 0,
-        noOfTrades: 0,
-        noOfWinningTrades: 0,
-        noOfLosingTrades: 0,
-        pointsEarned: 0,
-        quantity: 0,
-        netProfitAndLoss: this.pointsEarned * this.quantity,
-        maxProfitPoints: 0,
-        maxLossPoints: 0,
-        maxProfitOneTrade: this.quantity * this.maxProfitPoints,
-        maxLossPoints: this.quantity * this.maxLossPoints,
-        targetHit: 0,
-        stoplossHit: 0,
-        partialProfit: this.noOfWinningTrades - this.targetHit,
-        partialLoss: this.noOfLosingTrades - this.stoplossHit,
-        averagePoints: this.pointsEarned / this.noOfTrades,
-        data: [
-          {
-            date: 0,
-            type: "Buy/Sell",
-            entry: 300,
-            stop: 300,
-            stopPercentage: 1,
-            takeProfit: 0,
-            closePrice: 0,
-            exitprice: 0,
-            profit: 1,
-            pointsEarnedAndLoss: 0,
-          },
-          {
-            date: 0,
-            type: "Buy/Sell",
-            entry: 300,
-            stop: 300,
-            stopPercentage: 1,
-            takeProfit: 0,
-            closePrice: 0,
-            exitprice: 0,
-            profit: 1,
-            pointsEarnedAndLoss: 0,
-          },
-        ],
+        date: 0,
+        type: "Buy/Sell",
+        entry: 300,
+        stop: 300,
+        stopPercentage: 1,
+        takeProfit: 0,
+        closePrice: 0,
+        exitprice: 0,
+        profit: 1,
+        pointsEarnedAndLoss: 0,
+      },
+      {
+        date: 0,
+        type: "Buy/Sell",
+        entry: 300,
+        stop: 300,
+        stopPercentage: 1,
+        takeProfit: 0,
+        closePrice: 0,
+        exitprice: 0,
+        profit: 1,
+        pointsEarnedAndLoss: 0,
       },
     ],
+    touched = false;
   };
-  return outputData;
 }
 
-function getMonthName(num){
-    let month = ["jan","Feb","March","April","May","June","July","August","September","October","november","december"]
-    return month[num];
+function getMonthName(num) {
+  let month = [
+    "jan",
+    "Feb",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "november",
+    "december",
+  ];
+  return month[num];
 }
