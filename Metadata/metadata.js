@@ -19,11 +19,13 @@ let firstCandle = {
   type: "",
 };
 let currentCandle = {
+  date: '',
   open: 0,
   high: 0,
   low: 0,
   close: 0,
   volume: 0,
+  type:''
 };
 let coreData = {
   date: "",
@@ -36,6 +38,7 @@ let coreData = {
   profit: 0,
   takeProfit: 0,
   pointsEarnedAndLoss: 0,
+  exitTriggerdTime: ''
 };
 
 async function start() {
@@ -62,11 +65,13 @@ function initializeEngine(meta, candle) {
   } else if (tempDate === date) {
     tempFrame--;
     //Main logic goes here
+    currentCandle.date = candle[0]
     currentCandle.open = candle[1];
     currentCandle.high = candle[2];
     currentCandle.low = candle[3];
     currentCandle.close = candle[4];
     currentCandle.volume = candle[5];
+    currentCandle.type = currentCandle.close > currentCandle.open ? 'Bullesh':'Bearesh'
     let difference;
     if (whichCandle != null) {
       if (firstCandle.type == "Bullesh") {
@@ -107,18 +112,18 @@ function coreConcept(meta, squareOff = null) {
   //Checking stopLoss start
   debugger
   if (coreData.type == "Bullesh") {
-    if (coreData.takeProfit <= currentCandle.low) {
+    if (coreData.stop - currentCandle.low >= 0) {
       buyOrSell(meta, coreData.stop, "stopLossHitted");
       //Stoploss hit
-    } else if (coreData.takeProfit <= currentCandle.high) {
+    } else if (currentCandle.high - coreData.takeProfit >= 0) {
       buyOrSell(meta, coreData.takeProfit, "targetHitted");
       //Target hit
     }
   } else if (coreData.type == "Bearesh") {
-    if (coreData.takeProfit <= currentCandle.high) {
+    if (currentCandle.high - coreData.stop >=0) {
       //Stoploss hit
       buyOrSell(meta, coreData.stop, "stopLossHitted");
-    } else if (coreData.takeProfit <= currentCandle.low) {
+    } else if (coreData.takeProfit - currentCandle.low >= 0) {
       //Target hit
       buyOrSell(meta, coreData.takeProfit, "targetHitted");
     }
@@ -132,6 +137,7 @@ function coreConcept(meta, squareOff = null) {
 function buyOrSell(meta, exitPrice, which) {
   if (coreData.exitprice <= 0) {
     coreData.exitprice = exitPrice;
+    coreData.exitTriggerdTime = currentCandle.date;
     console.log("profit_or_loss:", which);
   } else {
   }
