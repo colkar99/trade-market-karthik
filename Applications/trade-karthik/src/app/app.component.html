@@ -1,0 +1,167 @@
+<div class="jumbotron text-center">
+  <h1>My First Bootstrap Page</h1>
+  <p>Resize this responsive page to see the effect!</p>
+</div>
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-12 mb-5" *ngFor="let data of finalDatas; let i = index">
+      <div class="card">
+        <div class="card-header">{{data.monthName}}</div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-3">
+              <label for="">Instrument Name: </label>
+              <br>
+              <strong>{{data.instrumentName}}</strong>
+            </div>
+            <div class="col-md-3">
+              <label for="">Instrument Id</label>
+              <br>
+              <strong>{{data.instrumentId}}</strong>
+            </div>
+            <div class="col-md-3">
+              <label for="">Instrument Margin</label>
+              <br>
+              <strong>{{data.instrumentMargin}}</strong>
+            </div>
+            <div class="col-md-3">
+              <label for="">Custom Profit percentage</label>
+              <br>
+              <strong>{{data.customProfitPercentage}} %</strong>
+            </div>
+            <div class="col-md-3">
+              <label for="">Month No</label>
+              <br>
+              <strong>{{data.monthNumber + 1}} </strong>
+            </div>
+            <div class="col-md-3">
+              <label for="">Month Name</label>
+              <br>
+              <strong>{{data.monthName}} </strong>
+            </div>
+            <div class="col-md-3">
+              <label for="">No Of working days</label>
+              <br>
+              <strong>{{data.noOfDays}} </strong>
+            </div>
+            <div class="col-md-3">
+              <label for="">No Of Total trades</label>
+              <br>
+              <strong>{{data.noOfTrades}} </strong>
+            </div>
+            <div class="col-md-3">
+              <label for="">Winning trades</label>
+              <br>
+              <strong>{{data.noOfWinningTrades}} </strong>
+            </div>
+            <div class="col-md-3">
+              <label for="">Loss trades</label>
+              <br>
+              <strong>{{data.noOfLosingTrades}} </strong>
+            </div>
+            <div class="col-md-3">
+              <label for="">Total Points earned</label>
+              <br>
+              <strong>{{data.pointsEarned}} </strong>
+            </div>
+            <div class="col-md-3">
+              <label for="">Qantity per trade</label>
+              <br>
+              <strong>{{data.quantity}} </strong>
+            </div>
+            <div class="col-md-3">
+              <label for="">Total Profits</label>
+              <br>
+              <strong>{{data.netProfitAndLoss}} </strong>
+            </div>
+            <div class="col-md-3">
+              <label for="">Max profit points</label>
+              <br>
+              <strong>{{data.maxProfitPoints}} </strong>
+            </div>
+            <div class="col-md-3">
+              <label for="">Max Loss points</label>
+              <br>
+              <strong>{{data.maxLossPoints}} </strong>
+            </div>
+            <div class="col-md-3">
+              <label for="">Max profits One trade</label>
+              <br>
+              <strong>{{data.maxProfitOneTrade}} </strong>
+            </div>
+            <div class="col-md-3">
+              <label for="">Max Loss One trade</label>
+              <br>
+              <strong>{{data.maxLossOneTrade}} </strong>
+            </div>
+            <div class="col-md-3">
+              <label for="">No of targets hits</label>
+              <br>
+              <strong>{{data.targetHit}} </strong>
+            </div>
+            <div class="col-md-3">
+              <label for="">No of Stoploss hits</label>
+              <br>
+              <strong>{{data.stoplossHit}} </strong>
+            </div>
+            <div class="col-md-3">
+              <label for="">No of squareOfHit hits</label>
+              <br>
+              <strong>{{data.squareOfHit}} </strong>
+            </div>
+            <div class="col-md-3">
+              <label for="">Partial Profits</label>
+              <br>
+              <strong>{{data.partialProfit}} </strong>
+            </div>
+            <div class="col-md-3">
+              <label for="">Monthly Average points</label>
+              <br>
+              <strong>{{data.averagePoints}} </strong>
+            </div>
+          </div>
+          <div class="row">Day trade lists
+            <div class="col-md-12">
+              <table class="table table-bordered">
+                <thead>
+                  <tr>
+                    <th>Date</th>
+                    <th>Type</th>
+                    <th>Entry</th>
+                    <th>Stop</th>
+                    <th>Stop Percentage</th>
+                    <th>Target Price</th>
+                    <th>Close Price</th>
+                    <th>Exit Price</th>
+                    <th>Profit in %</th>
+                    <th>pointsEarnedAndLoss</th>
+                    <th>Comment</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let d of data.data;let j = index">
+
+                    <td>{{d.date}}</td>
+                    <td>{{d.type}}</td>
+                    <td>{{d.entry}}</td>
+                    <td>{{d.stop}}</td>
+                    <td>{{d.stopPercentage}}</td>
+                    <td>{{d.takeProfit}}</td>
+                    <td>{{d.closePrice}}</td>
+                    <td>{{d.exitprice}}</td>
+                    <td>{{d.profit}}</td>
+                    <td>{{d.pointsEarnedAndLoss}}</td>
+                    <td>{{d.commets}}</td>
+
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div class="card-footer">Footer</div>
+      </div>
+    </div>
+  </div>
+</div>
